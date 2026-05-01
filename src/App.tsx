@@ -9,7 +9,14 @@ const photos = Array.from(
   { length: photoCount },
   (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
 );
-const galleryPhotos = photos.map((photo, index) => (index === 31 ? photos[15] : photo));
+const galleryPhotoOrder = Array.from({ length: photoCount }, (_, index) => index);
+galleryPhotoOrder[14] = 31;
+galleryPhotoOrder[15] = 29;
+galleryPhotoOrder[16] = 30;
+galleryPhotoOrder[29] = 14;
+galleryPhotoOrder[30] = 16;
+galleryPhotoOrder[31] = 15;
+const galleryPhotos = galleryPhotoOrder.map((photoIndex) => photos[photoIndex]);
 const anniversaryPhotos = photos.slice(16, 32);
 const envelopeHearts = Array.from({ length: 18 }, (_, index) => ({
   id: index,
