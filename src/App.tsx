@@ -1,4 +1,8 @@
-const photos = Array.from({ length: 16 }, (_, index) => `/photos/photo-${String(index + 1).padStart(2, '0')}.jpg`);
+const baseUrl = import.meta.env.BASE_URL;
+const photos = Array.from(
+  { length: 16 },
+  (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
+);
 
 const reasons = [
   'your smile makes every day feel softer',
@@ -104,7 +108,7 @@ function App() {
             <figure key={photo} className={`photo-card card-${(index % 5) + 1}`}>
               <img src={photo} alt={`Memory ${index + 1}`} loading="lazy" />
               <figcaption>
-                <span>♡</span>
+                <span>heart</span>
                 moment {index + 1}
               </figcaption>
             </figure>
