@@ -10,8 +10,8 @@ const photos = Array.from(
   (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
 );
 const galleryPhotoOrder = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 28, 29, 30, 17, 19, 20, 21, 22,
-  23, 24, 25, 26, 27, 31, 14, 16, 15,
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 23, 24, 25, 17, 19, 20, 21, 22,
+  26, 27, 28, 29, 30, 31, 14, 16, 15,
 ];
 const galleryPhotos = galleryPhotoOrder.map((photoIndex) => photos[photoIndex]);
 const anniversaryPhotos = photos.slice(16, 32);
