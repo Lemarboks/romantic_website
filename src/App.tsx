@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import type { CSSProperties } from 'react';
+
 const baseUrl = import.meta.env.BASE_URL;
 const photoCount = 32;
 const photos = Array.from(
@@ -5,6 +8,11 @@ const photos = Array.from(
   (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
 );
 const anniversaryPhotos = photos.slice(16, 32);
+const envelopeHearts = Array.from({ length: 18 }, (_, index) => ({
+  id: index,
+  left: `${8 + ((index * 23) % 84)}%`,
+  delay: `${(index % 7) * 0.12}s`,
+}));
 
 const reasons = [
   'your smile makes every day feel softer',
@@ -42,6 +50,8 @@ function KittyFace() {
 }
 
 function App() {
+  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+
   return (
     <main>
       <div className="heart-field" aria-hidden="true">
@@ -100,27 +110,55 @@ function App() {
         ))}
       </section>
 
-      <section className="anniversary" aria-label="Happy 13 months">
+      <section className={`anniversary ${isEnvelopeOpen ? 'is-open' : ''}`} aria-label="Happy 14 months">
         <div className="anniversary-copy">
-          <p className="eyebrow">happy 13 months</p>
-          <h2>Thirteen months of choosing you</h2>
+          <p className="eyebrow">happy 14 months</p>
+          <h2>Open this little love envelope</h2>
           <p>
-            Thirteen months of smiles, soft moments, silly little memories, and falling for you in
-            new ways. This part is just for celebrating us.
+            A tiny Hello Kitty surprise filled with hearts, happy dances, and some of my favorite
+            pictures of us.
           </p>
         </div>
 
-        <div className="month-badge" aria-hidden="true">
-          <span>13</span>
-          <small>months</small>
-        </div>
+        <div className="envelope-stage">
+          <button
+            className="kitty-envelope"
+            type="button"
+            aria-expanded={isEnvelopeOpen}
+            onClick={() => setIsEnvelopeOpen((open) => !open)}
+          >
+            <span className="envelope-back" />
+            <span className="envelope-letter">
+              <strong>Happy 14 Months</strong>
+              <small>i love you so much</small>
+            </span>
+            <span className="envelope-flap" />
+            <span className="envelope-front">
+              <KittyFace />
+              <span className="tap-note">{isEnvelopeOpen ? 'close envelope' : 'tap to open'}</span>
+            </span>
+          </button>
 
-        <div className="anniversary-strip" aria-label="More favorite pictures">
-          {anniversaryPhotos.map((photo, index) => (
-            <figure key={photo} className="mini-memory">
-              <img src={photo} alt={`13 month memory ${index + 1}`} loading="lazy" />
-            </figure>
-          ))}
+          <div className="surprise-burst" aria-hidden="true">
+            {envelopeHearts.map((heart) => (
+              <span
+                key={heart.id}
+                className="burst-heart"
+                style={{ left: heart.left, animationDelay: heart.delay }}
+              />
+            ))}
+            <KittyFace />
+            <KittyFace />
+            <KittyFace />
+          </div>
+
+          <div className="envelope-photos" aria-label="Happy 14 months pictures">
+            {anniversaryPhotos.map((photo, index) => (
+              <figure key={photo} className="envelope-photo" style={{ '--photo-index': index } as CSSProperties}>
+                <img src={photo} alt={`14 month memory ${index + 1}`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
