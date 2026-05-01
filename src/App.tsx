@@ -9,6 +9,7 @@ const photos = Array.from(
   { length: photoCount },
   (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
 );
+const galleryPhotos = photos.map((photo, index) => (index === 31 ? photos[15] : photo));
 const anniversaryPhotos = photos.slice(16, 32);
 const envelopeHearts = Array.from({ length: 18 }, (_, index) => ({
   id: index,
@@ -233,29 +234,12 @@ function EnvelopePage() {
           onClick={() => setIsEnvelopeOpen((open) => !open)}
         >
           <span className="envelope-back" />
-          <span className="envelope-letter">
-            <strong>Happy 14 Months</strong>
-            <small>i love you so much</small>
-          </span>
           <span className="envelope-flap" />
           <span className="envelope-front">
             <KittyFace />
             <span className="tap-note">{isEnvelopeOpen ? 'close envelope' : 'tap to open'}</span>
           </span>
         </button>
-
-        <div className="surprise-burst" aria-hidden="true">
-          {envelopeHearts.map((heart) => (
-            <span
-              key={heart.id}
-              className="burst-heart"
-              style={{ left: heart.left, animationDelay: heart.delay }}
-            />
-          ))}
-          <KittyFace />
-          <KittyFace />
-          <KittyFace />
-        </div>
 
         <FlowerScene />
 
@@ -265,6 +249,23 @@ function EnvelopePage() {
               <img src={photo} alt={`14 month memory ${index + 1}`} loading="lazy" />
             </figure>
           ))}
+        </div>
+
+        <div className="anniversary-popup" aria-hidden={!isEnvelopeOpen}>
+          <div className="popup-heart-field" aria-hidden="true">
+            {envelopeHearts.map((heart) => (
+              <span
+                key={heart.id}
+                className="burst-heart"
+                style={{ left: heart.left, animationDelay: heart.delay }}
+              />
+            ))}
+          </div>
+          <div className="popup-card">
+            <KittyFace />
+            <strong>Happy 14 Months</strong>
+            <small>i love you so much</small>
+          </div>
         </div>
       </div>
     </section>
@@ -287,9 +288,9 @@ function GalleryPage() {
         <h2>Every picture is a tiny love letter</h2>
       </div>
       <div className="photo-grid">
-        {photos.map((photo, index) => (
+        {galleryPhotos.map((photo, index) => (
           <figure
-            key={photo}
+            key={`${photo}-${index}`}
             className={`photo-card card-${(index % 5) + 1} ${openLetters.includes(index) ? 'is-flipped' : ''}`}
           >
             <button
