@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
+
+type Page = 'home' | 'envelope' | 'gallery';
 
 const baseUrl = import.meta.env.BASE_URL;
 const photoCount = 32;
@@ -14,14 +16,16 @@ const envelopeHearts = Array.from({ length: 18 }, (_, index) => ({
   delay: `${(index % 7) * 0.12}s`,
 }));
 
+function getPageFromHash(): Page {
+  const hash = window.location.hash.replace('#/', '');
+  if (hash === 'envelope' || hash === 'gallery') return hash;
+  return 'home';
+}
+
 function getEnvelopePhotoStyle(index: number): CSSProperties {
   return {
-    '--spread-x': `${((index % 8) - 3.5) * 2.8}rem`,
-    '--spread-y': `${(index % 4) * -2.4}rem`,
-    '--mobile-spread-x': `${((index % 4) - 1.5) * 3.2}rem`,
-    '--mobile-spread-y': `${(index % 4) * -1.7}rem`,
+    '--photo-order': index,
     '--photo-rotate': `${(index - 8) * 1.8}deg`,
-    '--mobile-photo-rotate': `${(index - 8) * 1.5}deg`,
   } as CSSProperties;
 }
 
@@ -51,9 +55,9 @@ const floatingHearts = Array.from({ length: 28 }, (_, index) => ({
   size: `${14 + (index % 5) * 5}px`,
 }));
 
-function KittyFace() {
+function KittyFace({ className = '' }: { className?: string }) {
   return (
-    <div className="kitty" aria-hidden="true">
+    <div className={`kitty ${className}`} aria-hidden="true">
       <span className="ear ear-left" />
       <span className="ear ear-right" />
       <span className="bow">
@@ -71,34 +75,69 @@ function KittyFace() {
   );
 }
 
-function App() {
-  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
-  const [openLetters, setOpenLetters] = useState<number[]>([]);
-
-  const toggleLoveLetter = (index: number) => {
-    setOpenLetters((current) =>
-      current.includes(index) ? current.filter((item) => item !== index) : [...current, index],
-    );
-  };
-
+function FlowerScene() {
   return (
-    <main>
-      <div className="heart-field" aria-hidden="true">
-        {floatingHearts.map((heart) => (
-          <span
-            key={heart.id}
-            className="floating-heart"
-            style={{
-              left: heart.left,
-              animationDelay: heart.delay,
-              animationDuration: heart.duration,
-              width: heart.size,
-              height: heart.size,
-            }}
-          />
-        ))}
+    <div className="flower-scene" aria-label="A cute masked hero giving Hello Kitty a flower">
+      <div className="spider-cute" aria-hidden="true">
+        <span className="spider-head">
+          <span />
+          <span />
+        </span>
+        <span className="spider-body" />
+        <span className="spider-arm flower-arm">
+          <span className="flower">
+            <span />
+            <span />
+            <span />
+            <span />
+          </span>
+        </span>
+        <span className="spider-arm wave-arm" />
       </div>
+      <KittyFace className="flower-kitty" />
+    </div>
+  );
+}
 
+function FloatingHearts() {
+  return (
+    <div className="heart-field" aria-hidden="true">
+      {floatingHearts.map((heart) => (
+        <span
+          key={heart.id}
+          className="floating-heart"
+          style={{
+            left: heart.left,
+            animationDelay: heart.delay,
+            animationDuration: heart.duration,
+            width: heart.size,
+            height: heart.size,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function Nav({ page }: { page: Page }) {
+  return (
+    <nav className="site-nav" aria-label="Website pages">
+      <a className={page === 'home' ? 'active' : ''} href="#/">
+        home
+      </a>
+      <a className={page === 'envelope' ? 'active' : ''} href="#/envelope">
+        envelope
+      </a>
+      <a className={page === 'gallery' ? 'active' : ''} href="#/gallery">
+        gallery
+      </a>
+    </nav>
+  );
+}
+
+function HomePage() {
+  return (
+    <>
       <section className="hero">
         <div className="hero-copy">
           <p className="eyebrow">made with all my love</p>
@@ -107,9 +146,14 @@ function App() {
             A tiny pink world full of our memories, little hearts, soft sparkles, and one very
             fancy kitty bow because you deserve something adorable.
           </p>
-          <a className="love-button" href="#memories">
-            open our memories
-          </a>
+          <div className="hero-actions">
+            <a className="love-button" href="#/envelope">
+              open 14 months
+            </a>
+            <a className="love-button secondary" href="#/gallery">
+              read the letters
+            </a>
+          </div>
         </div>
 
         <div className="hero-photo-stack" aria-label="Favorite memories">
@@ -138,97 +182,136 @@ function App() {
           </article>
         ))}
       </section>
+    </>
+  );
+}
 
-      <section className={`anniversary ${isEnvelopeOpen ? 'is-open' : ''}`} aria-label="Happy 14 months">
-        <div className="anniversary-copy">
-          <p className="eyebrow">happy 14 months</p>
-          <h2>Open this little love envelope</h2>
-          <p>
-            A tiny Hello Kitty surprise filled with hearts, happy dances, and some of my favorite
-            pictures of us.
-          </p>
+function EnvelopePage() {
+  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+
+  return (
+    <section className={`anniversary page-section ${isEnvelopeOpen ? 'is-open' : ''}`} aria-label="Happy 14 months">
+      <div className="anniversary-copy">
+        <p className="eyebrow">happy 14 months</p>
+        <h2>Open this little love envelope</h2>
+        <p>
+          A tiny Hello Kitty surprise filled with hearts, happy dances, better picture reveals, and
+          a cute masked hero giving Kitty a flower.
+        </p>
+      </div>
+
+      <div className="envelope-stage">
+        <button
+          className="kitty-envelope"
+          type="button"
+          aria-expanded={isEnvelopeOpen}
+          onClick={() => setIsEnvelopeOpen((open) => !open)}
+        >
+          <span className="envelope-back" />
+          <span className="envelope-letter">
+            <strong>Happy 14 Months</strong>
+            <small>i love you so much</small>
+          </span>
+          <span className="envelope-flap" />
+          <span className="envelope-front">
+            <KittyFace />
+            <span className="tap-note">{isEnvelopeOpen ? 'close envelope' : 'tap to open'}</span>
+          </span>
+        </button>
+
+        <div className="surprise-burst" aria-hidden="true">
+          {envelopeHearts.map((heart) => (
+            <span
+              key={heart.id}
+              className="burst-heart"
+              style={{ left: heart.left, animationDelay: heart.delay }}
+            />
+          ))}
+          <KittyFace />
+          <KittyFace />
+          <KittyFace />
         </div>
 
-        <div className="envelope-stage">
-          <button
-            className="kitty-envelope"
-            type="button"
-            aria-expanded={isEnvelopeOpen}
-            onClick={() => setIsEnvelopeOpen((open) => !open)}
-          >
-            <span className="envelope-back" />
-            <span className="envelope-letter">
-              <strong>Happy 14 Months</strong>
-              <small>i love you so much</small>
-            </span>
-            <span className="envelope-flap" />
-            <span className="envelope-front">
-              <KittyFace />
-              <span className="tap-note">{isEnvelopeOpen ? 'close envelope' : 'tap to open'}</span>
-            </span>
-          </button>
+        <FlowerScene />
 
-          <div className="surprise-burst" aria-hidden="true">
-            {envelopeHearts.map((heart) => (
-              <span
-                key={heart.id}
-                className="burst-heart"
-                style={{ left: heart.left, animationDelay: heart.delay }}
-              />
-            ))}
-            <KittyFace />
-            <KittyFace />
-            <KittyFace />
-          </div>
-
-          <div className="envelope-photos" aria-label="Happy 14 months pictures">
-            {anniversaryPhotos.map((photo, index) => (
-              <figure key={photo} className="envelope-photo" style={getEnvelopePhotoStyle(index)}>
-                <img src={photo} alt={`14 month memory ${index + 1}`} loading="lazy" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="memories" id="memories">
-        <div className="section-heading">
-          <p className="eyebrow">our little gallery</p>
-          <h2>Every picture is a tiny love letter</h2>
-        </div>
-        <div className="photo-grid">
-          {photos.map((photo, index) => (
-            <figure
-              key={photo}
-              className={`photo-card card-${(index % 5) + 1} ${openLetters.includes(index) ? 'is-flipped' : ''}`}
-            >
-              <button
-                className="photo-flip"
-                type="button"
-                aria-pressed={openLetters.includes(index)}
-                aria-label={`Open love letter for memory ${index + 1}`}
-                onClick={() => toggleLoveLetter(index)}
-              >
-                <span className="photo-inner">
-                  <span className="photo-front">
-                    <img src={photo} alt={`Memory ${index + 1}`} loading="lazy" />
-                    <span className="photo-caption">
-                      <span>letter</span>
-                      moment {index + 1}
-                    </span>
-                  </span>
-                  <span className="photo-letter">
-                    <span>love letter {index + 1}</span>
-                    <strong>{loveLetters[index % loveLetters.length]}</strong>
-                    <small>tap to see the photo again</small>
-                  </span>
-                </span>
-              </button>
+        <div className="envelope-photos" aria-label="Happy 14 months pictures">
+          {anniversaryPhotos.map((photo, index) => (
+            <figure key={photo} className="envelope-photo" style={getEnvelopePhotoStyle(index)}>
+              <img src={photo} alt={`14 month memory ${index + 1}`} loading="lazy" />
             </figure>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
+function GalleryPage() {
+  const [openLetters, setOpenLetters] = useState<number[]>([]);
+
+  const toggleLoveLetter = (index: number) => {
+    setOpenLetters((current) =>
+      current.includes(index) ? current.filter((item) => item !== index) : [...current, index],
+    );
+  };
+
+  return (
+    <section className="memories page-section" id="memories">
+      <div className="section-heading">
+        <p className="eyebrow">our little gallery</p>
+        <h2>Every picture is a tiny love letter</h2>
+      </div>
+      <div className="photo-grid">
+        {photos.map((photo, index) => (
+          <figure
+            key={photo}
+            className={`photo-card card-${(index % 5) + 1} ${openLetters.includes(index) ? 'is-flipped' : ''}`}
+          >
+            <button
+              className="photo-flip"
+              type="button"
+              aria-pressed={openLetters.includes(index)}
+              aria-label={`Open love letter for memory ${index + 1}`}
+              onClick={() => toggleLoveLetter(index)}
+            >
+              <span className="photo-inner">
+                <span className="photo-front">
+                  <img src={photo} alt={`Memory ${index + 1}`} loading="lazy" />
+                  <span className="photo-caption">
+                    <span>letter</span>
+                    moment {index + 1}
+                  </span>
+                </span>
+                <span className="photo-letter">
+                  <span>love letter {index + 1}</span>
+                  <strong>{loveLetters[index % loveLetters.length]}</strong>
+                  <small>tap to see the photo again</small>
+                </span>
+              </span>
+            </button>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [page, setPage] = useState<Page>(getPageFromHash);
+
+  useEffect(() => {
+    const handleHashChange = () => setPage(getPageFromHash());
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  return (
+    <main>
+      <FloatingHearts />
+      <Nav page={page} />
+      {page === 'home' && <HomePage />}
+      {page === 'envelope' && <EnvelopePage />}
+      {page === 'gallery' && <GalleryPage />}
       <section className="message">
         <KittyFace />
         <div>
