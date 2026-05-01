@@ -14,11 +14,33 @@ const envelopeHearts = Array.from({ length: 18 }, (_, index) => ({
   delay: `${(index % 7) * 0.12}s`,
 }));
 
+function getEnvelopePhotoStyle(index: number): CSSProperties {
+  return {
+    '--spread-x': `${((index % 8) - 3.5) * 2.8}rem`,
+    '--spread-y': `${(index % 4) * -2.4}rem`,
+    '--mobile-spread-x': `${((index % 4) - 1.5) * 3.2}rem`,
+    '--mobile-spread-y': `${(index % 4) * -1.7}rem`,
+    '--photo-rotate': `${(index - 8) * 1.8}deg`,
+    '--mobile-photo-rotate': `${(index - 8) * 1.5}deg`,
+  } as CSSProperties;
+}
+
 const reasons = [
   'your smile makes every day feel softer',
   'you make ordinary moments feel like magic',
   'you are my favorite hello and my sweetest home',
   'you make my heart do tiny cartwheels',
+];
+
+const loveLetters = [
+  'I would choose you in every version of every day.',
+  'You make my world feel gentle, bright, and safe.',
+  'Every memory with you becomes one of my favorite stories.',
+  'Your laugh is one of the prettiest sounds in my life.',
+  'I love the little things about you more than words can hold.',
+  'Being yours is still my favorite part of everything.',
+  'You are my calm place and my biggest smile.',
+  'I fall for you again in the smallest moments.',
 ];
 
 const floatingHearts = Array.from({ length: 28 }, (_, index) => ({
@@ -51,6 +73,13 @@ function KittyFace() {
 
 function App() {
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+  const [openLetters, setOpenLetters] = useState<number[]>([]);
+
+  const toggleLoveLetter = (index: number) => {
+    setOpenLetters((current) =>
+      current.includes(index) ? current.filter((item) => item !== index) : [...current, index],
+    );
+  };
 
   return (
     <main>
@@ -154,7 +183,7 @@ function App() {
 
           <div className="envelope-photos" aria-label="Happy 14 months pictures">
             {anniversaryPhotos.map((photo, index) => (
-              <figure key={photo} className="envelope-photo" style={{ '--photo-index': index } as CSSProperties}>
+              <figure key={photo} className="envelope-photo" style={getEnvelopePhotoStyle(index)}>
                 <img src={photo} alt={`14 month memory ${index + 1}`} loading="lazy" />
               </figure>
             ))}
@@ -169,12 +198,32 @@ function App() {
         </div>
         <div className="photo-grid">
           {photos.map((photo, index) => (
-            <figure key={photo} className={`photo-card card-${(index % 5) + 1}`}>
-              <img src={photo} alt={`Memory ${index + 1}`} loading="lazy" />
-              <figcaption>
-                <span>heart</span>
-                moment {index + 1}
-              </figcaption>
+            <figure
+              key={photo}
+              className={`photo-card card-${(index % 5) + 1} ${openLetters.includes(index) ? 'is-flipped' : ''}`}
+            >
+              <button
+                className="photo-flip"
+                type="button"
+                aria-pressed={openLetters.includes(index)}
+                aria-label={`Open love letter for memory ${index + 1}`}
+                onClick={() => toggleLoveLetter(index)}
+              >
+                <span className="photo-inner">
+                  <span className="photo-front">
+                    <img src={photo} alt={`Memory ${index + 1}`} loading="lazy" />
+                    <span className="photo-caption">
+                      <span>letter</span>
+                      moment {index + 1}
+                    </span>
+                  </span>
+                  <span className="photo-letter">
+                    <span>love letter {index + 1}</span>
+                    <strong>{loveLetters[index % loveLetters.length]}</strong>
+                    <small>tap to see the photo again</small>
+                  </span>
+                </span>
+              </button>
             </figure>
           ))}
         </div>
