@@ -649,133 +649,170 @@ h2 {
   transition-delay: 340ms;
 }
 
-.spider-cute {
-  height: 8.5rem;
+.spider-cute-head {
+  background:
+    radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.28), transparent 20%),
+    linear-gradient(145deg, #ff4158 0%, #e51f36 62%, #b60f27 100%);
+  border: 0.22rem solid #241823;
+  border-radius: 52% 52% 48% 48%;
+  box-shadow:
+    0 0.8rem 0 #8c1027,
+    0 1.2rem 1.6rem rgba(118, 54, 76, 0.22);
+  height: 7.2rem;
   position: relative;
-  width: 7rem;
+  transform: rotate(-5deg);
+  width: 6.7rem;
 }
 
-.spider-head {
-  background: #e92238;
-  border: 0.18rem solid #25212a;
-  border-radius: 48%;
-  height: 4.2rem;
-  left: 50%;
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  width: 4rem;
-}
-
-.spider-head::before,
-.spider-head::after {
-  background: #25212a;
+.spider-cute-head::before,
+.spider-cute-head::after {
+  background: rgba(36, 24, 35, 0.38);
   content: "";
-  height: 0.12rem;
+  height: 7rem;
   left: 50%;
   position: absolute;
-  top: 0.4rem;
-  transform-origin: bottom center;
-  width: 0.12rem;
+  top: 0.1rem;
+  transform-origin: top center;
+  width: 0.08rem;
 }
 
-.spider-head::before {
-  transform: rotate(-35deg);
+.spider-cute-head::before {
+  transform: rotate(-31deg);
 }
 
-.spider-head::after {
-  transform: rotate(35deg);
+.spider-cute-head::after {
+  transform: rotate(31deg);
 }
 
-.spider-head span {
-  background: #fff;
-  border: 0.12rem solid #25212a;
-  border-radius: 55% 45% 55% 45%;
-  height: 0.9rem;
+.mask-web {
+  background: rgba(36, 24, 35, 0.38);
+  left: 50%;
   position: absolute;
-  top: 1.55rem;
-  width: 1.1rem;
+  transform-origin: center;
+  width: 0.08rem;
 }
 
-.spider-head span:first-child {
-  left: 0.65rem;
+.web-center {
+  height: 6.65rem;
+  top: 0.28rem;
+  transform: translateX(-50%);
+}
+
+.web-left,
+.web-right {
+  height: 5.7rem;
+  top: 0.72rem;
+}
+
+.web-left {
+  transform: translateX(-50%) rotate(-58deg);
+}
+
+.web-right {
+  transform: translateX(-50%) rotate(58deg);
+}
+
+.mask-eye {
+  background: #fff;
+  border: 0.18rem solid #241823;
+  height: 1.55rem;
+  position: absolute;
+  top: 2.45rem;
+  width: 2rem;
+  z-index: 2;
+}
+
+.mask-eye.eye-left {
+  border-radius: 75% 35% 70% 35%;
+  left: 0.82rem;
   transform: rotate(18deg);
 }
 
-.spider-head span:last-child {
-  right: 0.65rem;
+.mask-eye.eye-right {
+  border-radius: 35% 75% 35% 70%;
+  right: 0.82rem;
   transform: rotate(-18deg);
 }
 
-.spider-body {
-  background: linear-gradient(90deg, #1e49a8 0 50%, #e92238 50%);
-  border: 0.18rem solid #25212a;
-  border-radius: 2rem 2rem 1.2rem 1.2rem;
-  height: 4.6rem;
-  left: 50%;
-  position: absolute;
-  top: 3.7rem;
-  transform: translateX(-50%);
-  width: 3rem;
-}
-
-.spider-arm {
-  background: #e92238;
-  border: 0.16rem solid #25212a;
+.mask-blush {
+  background: rgba(255, 180, 203, 0.9);
   border-radius: 999px;
-  height: 0.85rem;
+  height: 0.4rem;
   position: absolute;
-  top: 4.8rem;
-  width: 4.2rem;
+  top: 4.45rem;
+  width: 0.95rem;
+  z-index: 2;
 }
 
-.flower-arm {
-  right: -2rem;
-  transform: rotate(-18deg);
+.blush-left {
+  left: 1.15rem;
+  transform: rotate(8deg);
 }
 
-.wave-arm {
-  left: -1.65rem;
-  transform: rotate(28deg);
+.blush-right {
+  right: 1.15rem;
+  transform: rotate(-8deg);
 }
 
-.flower {
-  background: #3c9f5a;
-  height: 2.9rem;
+.tiny-flower {
+  height: 4rem;
   position: absolute;
-  right: -0.4rem;
-  top: -2.45rem;
-  transform: rotate(28deg);
+  right: -1.7rem;
+  top: 2.5rem;
+  transform: rotate(24deg);
+  width: 2rem;
+  z-index: 3;
+}
+
+.tiny-flower .stem {
+  background: #2f9c56;
+  border-radius: 999px;
+  bottom: 0;
+  height: 3.15rem;
+  left: 0.92rem;
+  position: absolute;
   width: 0.18rem;
 }
 
-.flower span {
-  background: #ff76aa;
-  border: 0.08rem solid #9f123f;
+.tiny-flower .petal,
+.tiny-flower .center {
   border-radius: 50%;
-  height: 0.65rem;
   position: absolute;
-  top: -0.22rem;
-  width: 0.65rem;
 }
 
-.flower span:nth-child(1) {
-  left: -0.55rem;
+.tiny-flower .petal {
+  background: #ff8fba;
+  border: 0.08rem solid #9f123f;
+  height: 0.72rem;
+  top: 0.15rem;
+  width: 0.72rem;
 }
 
-.flower span:nth-child(2) {
-  right: -0.55rem;
+.petal-1 {
+  left: 0.18rem;
 }
 
-.flower span:nth-child(3) {
-  left: -0.1rem;
-  top: -0.75rem;
+.petal-2 {
+  right: 0.18rem;
 }
 
-.flower span:nth-child(4) {
+.petal-3 {
+  left: 0.64rem;
+  top: -0.32rem;
+}
+
+.petal-4 {
+  left: 0.64rem;
+  top: 0.58rem;
+}
+
+.tiny-flower .center {
   background: #ffd34f;
-  left: -0.24rem;
-  top: -0.28rem;
+  border: 0.08rem solid #9f7a12;
+  height: 0.58rem;
+  left: 0.72rem;
+  top: 0.22rem;
+  width: 0.58rem;
 }
 
 .flower-kitty {
@@ -1351,25 +1388,33 @@ h2 {
     gap: 0.6rem;
   }
 
-  .spider-cute {
-    height: 6.6rem;
-    width: 5.6rem;
+  .spider-cute-head {
+    height: 5.75rem;
+    width: 5.35rem;
   }
 
-  .spider-head {
-    height: 3.35rem;
-    width: 3.2rem;
+  .mask-eye {
+    height: 1.2rem;
+    top: 2rem;
+    width: 1.55rem;
   }
 
-  .spider-body {
-    height: 3.65rem;
-    top: 3rem;
-    width: 2.45rem;
+  .mask-eye.eye-left {
+    left: 0.66rem;
   }
 
-  .spider-arm {
-    top: 3.9rem;
-    width: 3.4rem;
+  .mask-eye.eye-right {
+    right: 0.66rem;
+  }
+
+  .mask-blush {
+    top: 3.65rem;
+  }
+
+  .tiny-flower {
+    right: -1.35rem;
+    top: 1.98rem;
+    transform: rotate(22deg) scale(0.86);
   }
 
   .flower-kitty {

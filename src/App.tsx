@@ -45,6 +45,30 @@ const loveLetters = [
   'Being yours is still my favorite part of everything.',
   'You are my calm place and my biggest smile.',
   'I fall for you again in the smallest moments.',
+  'You make even quiet days feel full of color.',
+  'I love the way your presence turns anywhere into home.',
+  'You are the sweetest chapter I keep wanting to reread.',
+  'My favorite plans are the ones that have you in them.',
+  'You make my heart feel lucky in a hundred tiny ways.',
+  'I love how your smile can fix the whole mood of my day.',
+  'Every photo of you feels like a little piece of sunshine.',
+  'You are my soft place to land and my favorite adventure.',
+  'I still get happy just thinking about seeing you.',
+  'You make love feel easy, warm, and real.',
+  'I love being known by you and loved by you.',
+  'You make simple moments feel worth remembering forever.',
+  'I hope you always feel as cherished as you make me feel.',
+  'You are beautiful in ways pictures can only almost catch.',
+  'I love the way we laugh about tiny things together.',
+  'You are my favorite reason to smile at my phone.',
+  'Every day with you adds another memory I want to keep.',
+  'You make my world softer just by being in it.',
+  'I love you more than yesterday and still less than tomorrow.',
+  'You are the person I want beside me for all the little days.',
+  'My heart feels at peace when it is close to yours.',
+  'You turn my ordinary life into something I am grateful for.',
+  'I love you in the big ways and in all the tiny details.',
+  'You are my favorite girl, my best feeling, and my sweetest love.',
 ];
 
 const floatingHearts = Array.from({ length: 28 }, (_, index) => ({
@@ -77,22 +101,23 @@ function KittyFace({ className = '' }: { className?: string }) {
 
 function FlowerScene() {
   return (
-    <div className="flower-scene" aria-label="A cute masked hero giving Hello Kitty a flower">
-      <div className="spider-cute" aria-hidden="true">
-        <span className="spider-head">
-          <span />
-          <span />
+    <div className="flower-scene" aria-label="A cute Spider-Man inspired head giving Hello Kitty a flower">
+      <div className="spider-cute-head" aria-hidden="true">
+        <span className="mask-web web-center" />
+        <span className="mask-web web-left" />
+        <span className="mask-web web-right" />
+        <span className="mask-eye eye-left" />
+        <span className="mask-eye eye-right" />
+        <span className="mask-blush blush-left" />
+        <span className="mask-blush blush-right" />
+        <span className="tiny-flower">
+          <span className="stem" />
+          <span className="petal petal-1" />
+          <span className="petal petal-2" />
+          <span className="petal petal-3" />
+          <span className="petal petal-4" />
+          <span className="center" />
         </span>
-        <span className="spider-body" />
-        <span className="spider-arm flower-arm">
-          <span className="flower">
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
-        </span>
-        <span className="spider-arm wave-arm" />
       </div>
       <KittyFace className="flower-kitty" />
     </div>
