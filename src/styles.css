@@ -110,6 +110,11 @@ h2 {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
+.love-button:focus-visible {
+  outline: 0.2rem solid #ffd34f;
+  outline-offset: 0.25rem;
+}
+
 .love-button:hover {
   box-shadow: 0 0.45rem 0 #b91555, 0 0.75rem 1.4rem rgba(185, 21, 85, 0.2);
   transform: translateY(0.3rem);
@@ -341,6 +346,94 @@ h2 {
   margin: 0;
 }
 
+.anniversary {
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 226, 239, 0.92)),
+    repeating-linear-gradient(135deg, rgba(239, 45, 119, 0.08) 0 0.55rem, transparent 0.55rem 1.1rem);
+  border-block: 0.16rem solid #f6a4c2;
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 12rem);
+  overflow: hidden;
+  padding: clamp(2rem, 6vw, 5rem);
+}
+
+.anniversary-copy {
+  max-width: 46rem;
+}
+
+.anniversary-copy p:not(.eyebrow) {
+  color: #6f3b4c;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.month-badge {
+  align-items: center;
+  animation: pulseBadge 2.8s ease-in-out infinite;
+  aspect-ratio: 1;
+  background: #fff;
+  border: 0.22rem solid #9f123f;
+  border-radius: 50%;
+  box-shadow: 0 1rem 2rem rgba(185, 21, 85, 0.2), inset 0 0 0 0.55rem #ffe0ed;
+  color: #c9165d;
+  display: grid;
+  justify-items: center;
+  padding: 1rem;
+}
+
+.month-badge span {
+  font-size: clamp(3rem, 8vw, 5.2rem);
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.month-badge small {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.anniversary-strip {
+  display: grid;
+  gap: 0.8rem;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(8, minmax(6rem, 1fr));
+}
+
+.mini-memory {
+  aspect-ratio: 1;
+  margin: 0;
+  min-width: 0;
+  position: relative;
+}
+
+.mini-memory img {
+  border: 0.24rem solid #fff;
+  border-radius: 0.9rem;
+  box-shadow: 0 0.9rem 1.5rem rgba(118, 54, 76, 0.18);
+  height: 100%;
+  object-fit: cover;
+  transform: rotate(var(--mini-tilt, -1deg));
+  transition: transform 220ms ease;
+  width: 100%;
+}
+
+.mini-memory:nth-child(2n) img {
+  --mini-tilt: 1.2deg;
+}
+
+.mini-memory:nth-child(3n) img {
+  --mini-tilt: -1.8deg;
+}
+
+.mini-memory:hover img {
+  transform: scale(1.05) rotate(0deg);
+}
+
 .memories {
   padding: clamp(2rem, 6vw, 5rem);
 }
@@ -510,10 +603,21 @@ h2 {
   }
 }
 
+@keyframes pulseBadge {
+  0%,
+  100% {
+    transform: scale(1) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1.04) rotate(2deg);
+  }
+}
+
 @media (max-width: 860px) {
   .hero {
     grid-template-columns: 1fr;
-    padding-top: 2.5rem;
+    min-height: auto;
+    padding: 2rem 1.25rem 3rem;
   }
 
   h1 {
@@ -528,6 +632,22 @@ h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .anniversary {
+    grid-template-columns: 1fr;
+    padding-inline: 1.25rem;
+    text-align: center;
+  }
+
+  .month-badge {
+    margin: 0 auto;
+    max-width: 11rem;
+    width: 58vw;
+  }
+
+  .anniversary-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .message {
     grid-template-columns: 1fr;
     text-align: center;
@@ -539,17 +659,38 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  body {
+    overflow-wrap: anywhere;
+  }
+
   .hero {
     min-height: auto;
-    padding: 1.5rem 1rem 3rem;
+    padding: 1.2rem 0.9rem 2.4rem;
   }
 
   h1 {
-    font-size: clamp(3rem, 18vw, 4.6rem);
+    font-size: clamp(2.75rem, 16vw, 4.2rem);
+    max-width: 10ch;
+  }
+
+  h2 {
+    font-size: clamp(1.9rem, 11vw, 3rem);
+  }
+
+  .hero-copy p:not(.eyebrow),
+  .message p:not(.eyebrow),
+  .anniversary-copy p:not(.eyebrow) {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .love-button {
+    justify-content: center;
+    width: 100%;
   }
 
   .hero-photo-stack {
-    min-height: 23rem;
+    min-height: 21rem;
   }
 
   .hero-photo-stack img {
@@ -564,9 +705,73 @@ h2 {
 
   .reasons {
     grid-template-columns: 1fr;
+    padding-inline: 0.9rem;
+  }
+
+  .reason-card {
+    min-height: auto;
+  }
+
+  .anniversary {
+    padding: 2.25rem 0.9rem;
+  }
+
+  .anniversary-strip {
+    gap: 0.55rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mini-memory img {
+    border-width: 0.18rem;
+    border-radius: 0.7rem;
   }
 
   .memories {
-    padding-inline: 1rem;
+    padding-inline: 0.9rem;
+  }
+
+  .photo-grid {
+    columns: 2 8.5rem;
+    column-gap: 0.65rem;
+  }
+
+  .photo-card {
+    margin-bottom: 0.65rem;
+  }
+
+  .photo-card img {
+    border-width: 0.22rem;
+    border-radius: 0.75rem;
+  }
+
+  .photo-card figcaption {
+    bottom: 0.45rem;
+    font-size: 0.62rem;
+    left: 0.45rem;
+    max-width: calc(100% - 0.9rem);
+    padding: 0.36rem 0.5rem;
+  }
+
+  .ticker span {
+    font-size: 1rem;
+  }
+
+  .message {
+    padding-inline: 0.9rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-photo-stack {
+    min-height: 18.5rem;
+  }
+
+  .kitty {
+    height: 6.7rem;
+    width: 8.2rem;
+  }
+
+  .photo-grid {
+    columns: 1 100%;
   }
 }

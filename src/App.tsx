@@ -1,8 +1,10 @@
 const baseUrl = import.meta.env.BASE_URL;
+const photoCount = 32;
 const photos = Array.from(
-  { length: 16 },
+  { length: photoCount },
   (_, index) => `${baseUrl}photos/photo-${String(index + 1).padStart(2, '0')}.jpg`,
 );
+const anniversaryPhotos = photos.slice(16, 32);
 
 const reasons = [
   'your smile makes every day feel softer',
@@ -96,6 +98,30 @@ function App() {
             <p>{reason}</p>
           </article>
         ))}
+      </section>
+
+      <section className="anniversary" aria-label="Happy 13 months">
+        <div className="anniversary-copy">
+          <p className="eyebrow">happy 13 months</p>
+          <h2>Thirteen months of choosing you</h2>
+          <p>
+            Thirteen months of smiles, soft moments, silly little memories, and falling for you in
+            new ways. This part is just for celebrating us.
+          </p>
+        </div>
+
+        <div className="month-badge" aria-hidden="true">
+          <span>13</span>
+          <small>months</small>
+        </div>
+
+        <div className="anniversary-strip" aria-label="More favorite pictures">
+          {anniversaryPhotos.map((photo, index) => (
+            <figure key={photo} className="mini-memory">
+              <img src={photo} alt={`13 month memory ${index + 1}`} loading="lazy" />
+            </figure>
+          ))}
+        </div>
       </section>
 
       <section className="memories" id="memories">
