@@ -21,3 +21,18 @@ npm.cmd run build
 ```
 
 The photos are in `public/photos`.
+
+## GitHub Pages
+
+For the easiest hosting setup, use **Settings > Pages > Deploy from a branch**, then choose:
+
+```text
+Branch: main
+Folder: /docs
+```
+
+The hosted URL will be:
+
+```text
+https://lemarboks.github.io/romantic_website/
+```
