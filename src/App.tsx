@@ -149,7 +149,15 @@ function FloatingHearts() {
   );
 }
 
-function Nav({ page }: { page: Page }) {
+function Nav({
+  page,
+  isPurpleBlackTheme,
+  onToggleTheme,
+}: {
+  page: Page;
+  isPurpleBlackTheme: boolean;
+  onToggleTheme: () => void;
+}) {
   return (
     <nav className="site-nav" aria-label="Website pages">
       <a className={page === 'home' ? 'active' : ''} href="#/">
@@ -161,6 +169,14 @@ function Nav({ page }: { page: Page }) {
       <a className={page === 'gallery' ? 'active' : ''} href="#/gallery">
         gallery
       </a>
+      <button
+        className="theme-toggle"
+        type="button"
+        aria-pressed={isPurpleBlackTheme}
+        onClick={onToggleTheme}
+      >
+        {isPurpleBlackTheme ? 'pink theme' : 'purple black'}
+      </button>
     </nav>
   );
 }
@@ -328,6 +344,7 @@ function GalleryPage() {
 
 function App() {
   const [page, setPage] = useState<Page>(getPageFromHash);
+  const [isPurpleBlackTheme, setIsPurpleBlackTheme] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => setPage(getPageFromHash());
@@ -335,10 +352,19 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle('purple-black-theme', isPurpleBlackTheme);
+    return () => document.body.classList.remove('purple-black-theme');
+  }, [isPurpleBlackTheme]);
+
   return (
     <main>
       <FloatingHearts />
-      <Nav page={page} />
+      <Nav
+        page={page}
+        isPurpleBlackTheme={isPurpleBlackTheme}
+        onToggleTheme={() => setIsPurpleBlackTheme((current) => !current)}
+      />
       {page === 'home' && <HomePage />}
       {page === 'envelope' && <EnvelopePage />}
       {page === 'gallery' && <GalleryPage />}

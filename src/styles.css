@@ -70,10 +70,30 @@ main > section {
   white-space: nowrap;
 }
 
+.theme-toggle {
+  background: #25102f;
+  border: 0;
+  border-radius: 999px;
+  color: #f5dcff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.62rem 0.85rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .site-nav a.active,
-.site-nav a:hover {
+.site-nav a:hover,
+.theme-toggle:hover {
   background: #ef2d77;
   color: #fff;
+}
+
+.theme-toggle:focus-visible {
+  outline: 0.2rem solid #ffd34f;
+  outline-offset: 0.18rem;
 }
 
 .page-section {
@@ -1138,6 +1158,123 @@ h2 {
 
 .floating-heart::after {
   top: -50%;
+}
+
+body.purple-black-theme {
+  color: #efe0ff;
+  background: #07020b;
+}
+
+body.purple-black-theme::before {
+  background:
+    radial-gradient(circle at 16% 14%, rgba(179, 79, 255, 0.34), transparent 19rem),
+    radial-gradient(circle at 86% 18%, rgba(90, 36, 154, 0.36), transparent 18rem),
+    linear-gradient(135deg, #06020a 0%, #170721 45%, #000 100%);
+}
+
+body.purple-black-theme .site-nav,
+body.purple-black-theme .reason-card,
+body.purple-black-theme .ticker,
+body.purple-black-theme .message,
+body.purple-black-theme .popup-card,
+body.purple-black-theme .photo-letter {
+  background: rgba(17, 8, 25, 0.9);
+  border-color: #7d36c7;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.38);
+}
+
+body.purple-black-theme .site-nav a,
+body.purple-black-theme .eyebrow,
+body.purple-black-theme .ticker span,
+body.purple-black-theme .photo-caption,
+body.purple-black-theme .photo-caption span,
+body.purple-black-theme .photo-letter span,
+body.purple-black-theme .photo-letter small,
+body.purple-black-theme .popup-card,
+body.purple-black-theme .tap-note {
+  color: #d9a4ff;
+}
+
+body.purple-black-theme .site-nav a.active,
+body.purple-black-theme .site-nav a:hover,
+body.purple-black-theme .theme-toggle:hover,
+body.purple-black-theme .theme-toggle {
+  background: #7d36c7;
+  color: #fff;
+}
+
+body.purple-black-theme h1,
+body.purple-black-theme h2,
+body.purple-black-theme .reason-card span,
+body.purple-black-theme .reason-card p,
+body.purple-black-theme .photo-letter strong {
+  color: #f0dcff;
+  text-shadow: none;
+}
+
+body.purple-black-theme .hero-copy p:not(.eyebrow),
+body.purple-black-theme .message p:not(.eyebrow),
+body.purple-black-theme .anniversary-copy p:not(.eyebrow),
+body.purple-black-theme .popup-card small {
+  color: #d7c2e8;
+}
+
+body.purple-black-theme .love-button {
+  background: #8d42db;
+  border-color: #cf9cff;
+  box-shadow: 0 0.75rem 0 #3d1458, 0 1rem 1.8rem rgba(125, 54, 199, 0.34);
+}
+
+body.purple-black-theme .love-button.secondary,
+body.purple-black-theme .tap-note,
+body.purple-black-theme .photo-caption {
+  background: #12081d;
+  border-color: #7d36c7;
+  color: #f0dcff;
+}
+
+body.purple-black-theme .anniversary {
+  background:
+    linear-gradient(90deg, rgba(9, 3, 14, 0.94), rgba(30, 9, 45, 0.94)),
+    repeating-linear-gradient(135deg, rgba(188, 119, 255, 0.12) 0 0.55rem, transparent 0.55rem 1.1rem);
+  border-color: #7d36c7;
+}
+
+body.purple-black-theme .envelope-back {
+  background: #1b0b2a;
+  border-color: #b978f5;
+}
+
+body.purple-black-theme .envelope-flap {
+  border-top-color: #5e2092;
+}
+
+body.purple-black-theme .envelope-front {
+  background:
+    linear-gradient(145deg, transparent 49.5%, #4a1972 50%),
+    linear-gradient(215deg, transparent 49.5%, #4a1972 50%),
+    #240d37;
+  border-color: #b978f5;
+}
+
+body.purple-black-theme .kitty,
+body.purple-black-theme .ear {
+  background: #f8f0ff;
+}
+
+body.purple-black-theme .bow,
+body.purple-black-theme .bow span,
+body.purple-black-theme .floating-heart,
+body.purple-black-theme .burst-heart,
+body.purple-black-theme .tiny-flower .petal {
+  background: #a855f7;
+}
+
+body.purple-black-theme .hero-photo-stack img,
+body.purple-black-theme .photo-card img,
+body.purple-black-theme .envelope-photo img {
+  border-color: #16081f;
+  box-shadow: 0 1.3rem 2.5rem rgba(0, 0, 0, 0.42);
 }
 
 @keyframes hearts {
